@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peygamber Efendimiz’den Kıssalar - Anlama Testi</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 10px;
+    }
+    .quiz-container {
+      background: white;
+      width: 100%;
+      max-width: 600px;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      text-align: center;
+      animation: fadeIn 0.5s ease-in-out;
+      position: relative;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+    h1 {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .option {
+      background: #f4f4f4;
+      padding: 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      word-wrap: break-word;
+    }
+    .option:hover {
+      background: #e0f7fa;
+    }
+    .option.selected {
+      border: 2px solid #2196f3;
+      background: #e3f2fd;
+    }
+    .option.correct {
+      background: #c8e6c9 !important;
+      border: 2px solid #388e3c !important;
+      color: #2e7d32;
+    }
+    .option.wrong {
+      background: #ffcdd2 !important;
+      border: 2px solid #d32f2f !important;
+      color: #c62828;
+    }
+    button {
+      background: #2196f3;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-top: 10px;
+      width: 100%;
+    }
+    button:hover {
+      background: #1976d2;
+    }
+    .result {
+      font-size: 1.2rem;
+      color: #333;
+      margin: 8px 0;
+    }
+    .welcome {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .emoji {
+      font-size: 1.3rem;
+    }
+    .feedback {
+      font-size: 1rem;
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+    .excellent { background: #d4edda; color: #155724; border: 2px solid #28a745; }
+    .verygood { background: #e2f0d9; color: #2e7d32; border: 2px solid #66bb6a; }
+    .good { background: #fff3cd; color: #856404; border: 2px solid #ffc107; }
+    .average { background: #d1ecf1; color: #0c5460; border: 2px solid #17a2b8; }
+    .weak { background: #f8d7da; color: #721c24; border: 2px solid #dc3545; }
+    .poor { background: #f5c6cb; color: #842029; border: 2px solid #bd2130; }
+    #timer {
+      position: absolute;
+      top: 10px;
+      left: 15px;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container" id="quiz">
+    <h1>📖 Peygamber Efendimiz’den Kıssalar Anlama Testi 📖</h1>
+    <p class="welcome">Merhaba sevgili öğrenci 👋<br><br>
+      Bu testte <b>hayvanların ilginç özelliklerini</b> öğrenip kendini sınayacaksın. ✨<br>
+      <b>Toplam soru sayısı:</b> 25 📚<br>
+      <b>Not:</b> Yanlış cevaplar, doğrulardan 1/4 oranında götürecek ➖✅.<br>
+      Testi dikkatle çöz, her sorudan sonra doğru cevabı göreceksin! 🧐
+    </p>
+    <button id="startBtn">Teste Başla 🚀</button>
+  </div>
+
+<script>
+const questions = [
+  { question: "“Bir Küp Altın” kıssasında adam neden altın dolu küpü tarla sahibine geri götürmüştür?", 
+    options: ["Altınları paylaşmak istememiştir", "Korktuğu için teslim etmek zorunda kalmıştır", "Hakkı olmadığını düşünmüştür", "Daha çok altın bulmak istemiştir"], 
+    answer: 2 },
+
+  { question: "Hâkim, iki adam arasındaki altın anlaşmazlığını nasıl çözmüştür?", 
+    options: ["Altınları devlet hazinesine vermiştir", "Onların çocuklarını evlendirip altınları onlara vermelerini önermiştir", "Altınları eşit bölüştürmüştür", "Her ikisini de cezalandırmıştır"], 
+    answer: 1 },
+
+  { question: "“Kurtuluş” kıssasında mağarada kalan üç arkadaşın kurtulma sebebi nedir?", 
+    options: ["Fiziksel güçlerini kullanmaları", "Yaptıkları iyi amellerle Allah’a dua etmeleri", "Yardım çağırmaları", "Taşları kırmaları"], 
+    answer: 1 },
+
+  { question: "İlk adam dua ederken hangi davranışını örnek göstermiştir?", 
+    options: ["Anne-babasına sabırla hizmet etmesi", "Çok sadaka vermesi", "Hacca gitmesi", "Namazlarını eksiksiz kılması"], 
+    answer: 0 },
+
+  { question: "“Kurtuluş” kıssasında ikinci adam neden Allah’a sığınmıştır?", 
+    options: ["Haram bir davranıştan son anda vazgeçtiği için", "Borcunu ödemediği için", "Yalan söylediği için", "Zengin olduğu için"], 
+    answer: 0 },
+
+  { question: "Üçüncü adamın duasındaki iyilik nedir?", 
+    options: ["Kardeşine yardım etmesi", "İşçisinin ücretini saklayıp onun adına yatırım yapması", "Yetimleri doyurması", "Komşusuna borç vermesi"], 
+    answer: 1 },
+
+  { question: "“Sadaka” kıssasında adam ilk gece kime sadaka vermiştir?", 
+    options: ["Bir yetime", "Bir hırsıza", "Bir yolcuya", "Bir dilenciye"], 
+    answer: 1 },
+
+  { question: "Adam, bir hırsıza ve kötü bir kadına sadaka verdiği için neden pişman olmamıştır?", 
+    options: ["Çünkü niyeti Allah rızası içindi", "Çünkü halk onu alkışlamıştır", "Çünkü yanlış kişiyi tanımamıştır", "Çünkü onlardan korkmuştur"], 
+    answer: 0 },
+
+  { question: "“Sır” kıssasında adamın yaptığı hangi davranış Allah’ın hoşuna gitmiştir?", 
+    options: ["Köpeğe su vermesi", "Fakire yemek vermesi", "Camide dua etmesi", "Komşusuna yardım etmesi"], 
+    answer: 0 },
+
+  { question: "Aynı kıssada kadının kötü davranışı nedir?", 
+    options: ["Kediyi besleyip dışarı salmaması", "Köpeğe su vermesi", "Eşine kızması", "Komşusuna yardım etmesi"], 
+    answer: 0 },
+
+  { question: "“Küller Toplanınca” kıssasında adam neden cesedinin yakılmasını istemiştir?", 
+    options: ["Allah’tan çok korktuğu için", "Günahlarına pişman olmadığı için", "İnsanlardan utanmak için", "İnancı olmadığı için"], 
+    answer: 0 },
+
+  { question: "Allah o adamı neden affetmiştir?", 
+    options: ["Samimi korkusunu ve niyetini bildiği için", "Günahı az olduğu için", "Melekler şefaat ettiği için", "Oğulları dua ettiği için"], 
+    answer: 0 },
+
+  { question: "“Affeden Affedilir” kıssasında zengin adam neyle imtihan edilmiştir?", 
+    options: ["Malını kaybetmekle", "Borçlularına nasıl davrandığıyla", "Namazla", "Hastalıkla"], 
+    answer: 1 },
+
+  { question: "Bu kıssadan çıkarılacak en doğru sonuç hangisidir?", 
+    options: ["İnsan affederse Allah da onu affeder", "Herkese borç vermemelidir", "Zengin olmak kötüdür", "Affetmek zayıflıktır"], 
+    answer: 0 },
+
+  { question: "“Sabret Anneciğim” kıssasında küçük çocuk annesine ne demiştir?", 
+    options: ["Kaçalım anneciğim", "Sabret anneciğim, çünkü hak yoldasın", "Kralı affet anneciğim", "Ben korkuyorum anneciğim"], 
+    answer: 1 },
+
+  { question: "Bu kıssada Peygamber Efendimiz neyi vurgulamak istemiştir?", 
+    options: ["İnancın uğruna sabretmenin yüceliğini", "Büyüklere saygıyı", "Hediyeleşmenin önemini", "Krallara itaat etmeyi"], 
+    answer: 0 },
+
+  { question: "“Allah’ın Sevgisini Kazanmak” kıssasında Allah, kullarına nasıl seslenmiştir?", 
+    options: ["Hastaları ziyaret etmediniz diye", "Namaz kılmadınız diye", "Oruç tutmadınız diye", "Sadaka vermediniz diye"], 
+    answer: 0 },
+
+  { question: "Bu kıssanın ana mesajı nedir?", 
+    options: ["Yardımlaşmak Allah sevgisine yaklaştırır", "Hastalık cezadır", "Yalnız kalmak güzeldir", "Zenginlik mutluluk getirir"], 
+    answer: 0 },
+
+  { question: "“Yağmurun Gideceği Adres” kıssasında tarla sahibine neden yağmur yağmıştır?", 
+    options: ["Sadaka ve paylaşım ahlakı yüzünden", "Çok dua ettiği için", "Tarla büyük olduğu için", "Melekler onu sevdiği için"], 
+    answer: 0 },
+
+  { question: "“Arkadaş Ziyareti” kıssasında melek, gence ne müjde vermiştir?", 
+    options: ["Allah da seni seviyor", "Arkadaşın seni affetti", "Artık zengin olacaksın", "Kral sana yardım edecek"], 
+    answer: 0 }
+];
+</script>
+
+    let currentQuestion = 0;
+    let selectedAnswers = [];
+    let answered = false;
+    let timerInterval;
+    let secondsElapsed = 0;
+
+    const quizEl = document.getElementById("quiz");
+
+    function startQuiz() {
+      quizEl.innerHTML = `
+        <div id="timer">⏱️ 00:00</div>
+        <h1 id="question"></h1>
+        <div class="options" id="options"></div>
+        <button id="nextBtn">Sonraki ➡️</button>
+      `;
+      currentQuestion = 0;
+      secondsElapsed = 0;
+      startTimer();
+      loadQuestion();
+      document.getElementById("nextBtn").onclick = nextHandler;
+    }
+
+    function startTimer() {
+      timerInterval = setInterval(() => {
+        secondsElapsed++;
+        document.getElementById("timer").textContent = "⏱️ " + formatTime(secondsElapsed);
+      }, 1000);
+    }
+
+    function stopTimer() {
+      clearInterval(timerInterval);
+    }
+
+    function formatTime(sec) {
+      const m = String(Math.floor(sec / 60)).padStart(2, '0');
+      const s = String(sec % 60).padStart(2, '0');
+      return `${m}:${s}`;
+    }
+
+    function loadQuestion() {
+      answered = false;
+      const q = questions[currentQuestion];
+      document.getElementById("question").textContent = (currentQuestion+1) + ". " + q.question;
+      const optionsEl = document.getElementById("options");
+      optionsEl.innerHTML = "";
+
+      q.options.forEach((opt, index) => {
+        const div = document.createElement("div");
+        div.textContent = opt;
+        div.classList.add("option");
+        div.onclick = () => selectOption(index, div);
+        optionsEl.appendChild(div);
+      });
+    }
+
+    function selectOption(index, element) {
+      if (answered) return;
+      document.querySelectorAll(".option").forEach(opt => opt.classList.remove("selected"));
+      element.classList.add("selected");
+      selectedAnswers[currentQuestion] = index;
+    }
+
+    function checkAnswer() {
+      if (answered) return;
+      answered = true;
+      const q = questions[currentQuestion];
+      const selected = selectedAnswers[currentQuestion];
+      const optionDivs = document.querySelectorAll(".option");
+
+      optionDivs.forEach((div, i) => {
+        if (i === q.answer) {
+          div.classList.add("correct");
+        }
+        if (i === selected && selected !== q.answer) {
+          div.classList.add("wrong");
+        }
+        div.onclick = null;
+      });
+    }
+
+    function showResult() {
+      stopTimer();
+      let correct = 0, wrong = 0, empty = 0;
+      questions.forEach((q, i) => {
+        if (selectedAnswers[i] === undefined) empty++;
+        else if (selectedAnswers[i] === q.answer) correct++;
+        else wrong++;
+      });
+      const net = correct - wrong/4;
+
+      const correctPct = ((correct / questions.length) * 100).toFixed(1);
+      const wrongPct = ((wrong / questions.length) * 100).toFixed(1);
+      const emptyPct = ((empty / questions.length) * 100).toFixed(1);
+      const netPct = ((net / questions.length) * 100).toFixed(1);
+
+      let feedback = "";
+      let feedbackClass = "feedback";
+
+      if (netPct >= 90) {
+        feedback = "🏆 Mükemmel! Kitabı çok dikkatli okumuşsun, neredeyse kusursuz anladın.";
+        feedbackClass += " excellent";
+      } else if (netPct >= 75) {
+        feedback = "🎉 Harika! Çok iyi anlamışsın, ufak tefek eksikler var.";
+        feedbackClass += " verygood";
+      } else if (netPct >= 60) {
+        feedback = "👏 Gayet iyi! Anlamışsın ama biraz daha dikkatle daha da iyi olur.";
+        feedbackClass += " good";
+      } else if (netPct >= 45) {
+        feedback = "👍 Fena değil. Daha dikkatli okuman faydalı olur.";
+        feedbackClass += " average";
+      } else if (netPct >= 30) {
+        feedback = "🤔 Biraz zorlanmışsın. Daha dikkatli okumaya çalışmalısın.";
+        feedbackClass += " weak";
+      } else {
+        feedback = "💪 Gayret etmelisin! Kitabı yeniden dikkatle okuman iyi olur.";
+        feedbackClass += " poor";
+      }
+
+      quizEl.innerHTML = `
+        <h1>🎉 Sonuçlar 🎉</h1>
+        <div class="result">Toplam Soru: ${questions.length}</div>
+        <div class="result">✅ Doğru: ${correct} (${correctPct}%)</div>
+        <div class="result">❌ Yanlış: ${wrong} (${wrongPct}%)</div>
+        <div class="result">➖ Boş: ${empty} (${emptyPct}%)</div>
+        <div class="result">📊 Net: ${net.toFixed(2)} (${netPct}%)</div>
+        <div class="result">⏱️ Süre: ${formatTime(secondsElapsed)}</div>
+        <p class="${feedbackClass}">${feedback}</p>
+      `;
+    }
+
+    function nextHandler() {
+      if (!answered) {
+        checkAnswer();
+        return;
+      }
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    document.getElementById("startBtn").onclick = startQuiz;
+  </script>
+</body>
+</html>
