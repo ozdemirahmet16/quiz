@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2E7D32;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1976D2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#81C784;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Rounded background -->
+  <rect width="512" height="512" rx="100" fill="url(#bgGradient)"/>
+  
+  <!-- Recycling symbol outer circle -->
+  <circle cx="256" cy="256" r="160" fill="none" stroke="white" stroke-width="12"/>
+  
+  <!-- Recycling arrows (3 curved arrows in triangle formation) -->
+  <!-- Arrow 1 (top) -->
+  <path d="M 256 120 Q 320 140 340 200" fill="none" stroke="white" stroke-width="16" stroke-linecap="round"/>
+  <polygon points="340,200 360,170 355,205" fill="white"/>
+  
+  <!-- Arrow 2 (bottom left) -->
+  <path d="M 180 320 Q 140 280 140 220" fill="none" stroke="white" stroke-width="16" stroke-linecap="round"/>
+  <polygon points="140,220 110,210 135,185" fill="white"/>
+  
+  <!-- Arrow 3 (bottom right) -->
+  <path d="M 332 320 Q 372 280 372 220" fill="none" stroke="white" stroke-width="16" stroke-linecap="round"/>
+  <polygon points="372,220 402,210 377,185" fill="white"/>
+  
+  <!-- Center circle with accent -->
+  <circle cx="256" cy="256" r="70" fill="url(#accentGradient)"/>
+  
+  <!-- Earth symbol inside (simplified) -->
+  <circle cx="256" cy="256" r="50" fill="none" stroke="white" stroke-width="6"/>
+  <path d="M 216 256 Q 256 240 296 256" fill="none" stroke="white" stroke-width="5"/>
+  <path d="M 220 270 Q 256 265 292 270" fill="none" stroke="white" stroke-width="5"/>
+  <circle cx="240" cy="235" r="8" fill="white"/>
+  
+  <!-- Decorative corners -->
+  <circle cx="100" cy="100" r="15" fill="rgba(255,255,255,0.3)"/>
+  <circle cx="412" cy="412" r="15" fill="rgba(255,255,255,0.3)"/>
+</svg>

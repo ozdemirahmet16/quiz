@@ -1,0 +1,27 @@
+{
+  "name": "Akıllı Geri Dönüşüm Kutusu",
+  "short_name": "Geri Dönüşüm",
+  "description": "Eğlenerek Geri Dönüşümü Öğren - Bilgilendirme ve Ödül Sistemi ile",
+  "start_url": "geri-donusum.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#2E7D32",
+  "background_color": "#0a1628",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["education", "lifestyle"],
+  "screenshots": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
